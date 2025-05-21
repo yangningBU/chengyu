@@ -1,42 +1,38 @@
-# Chinese Idioms Scraper
+# Chinese Idioms Project
 
-This project scrapes a table of 100 classic Chinese idioms from [LingoAce](https://www.lingoace.com/zh/blog/100-classic-idioms-you-must-know-when-learning-chinese-cn/) and saves them to a CSV file.
+This project processes Chinese idioms, translates them, and generates topic tags based on their meanings.
 
-## Setup Instructions
+## Setup
 
-### 1. Clone the repository (if applicable)
+1. Make sure you have Python 3.x installed
+2. Run the setup script to create and activate the virtual environment:
+   ```bash
+   ./setup.sh
+   ```
+   This will:
+   - Create a virtual environment if it doesn't exist
+   - Activate the virtual environment
+   - Install all required dependencies
+
+3. To activate the virtual environment in future sessions:
+   ```bash
+   source venv/bin/activate
+   ```
+
+## Project Structure
+
+- `chinese_idioms.csv`: Original Chinese idioms data
+- `chinese_idioms_with_translations.csv`: Idioms with English translations
+- `chinese_idioms_with_tags.csv`: Idioms with translations and generated tags
+- `generate_tags.py`: Script to generate topic tags for idioms
+- `requirements.txt`: Python package dependencies
+- `setup.sh`: Setup script for virtual environment
+
+## Usage
+
+After setting up the environment, you can run the tag generation script:
+```bash
+python3 generate_tags.py
 ```
-git clone <your-repo-url>
-cd chengyu
-```
 
-### 2. Create and activate a Python virtual environment
-```
-python3 -m venv venv
-source venv/bin/activate
-```
-
-### 3. Install dependencies
-```
-pip install -r requirements.txt
-```
-
-### 4. Install Brave Browser
-- Download and install Brave from [brave.com/download](https://brave.com/download/)
-- Or update script to use Chrome's binary path instead (see Notes below)
-
-### 5. Run the Selenium scraper
-```
-python selenium_scraper.py
-```
-
-This will create a file called `chinese_idioms.csv` with the scraped idioms.
-
-## Notes
-- The script uses Brave (a Chromium-based browser) in headless mode via Selenium and undetected-chromedriver.
-- Make sure Brave is installed at the default location (`/Applications/Brave Browser.app/Contents/MacOS/Brave Browser`) on macOS. If not, update the `binary_location` in `selenium_scraper.py` accordingly.
-- The original `scraper.py` uses requests/BeautifulSoup and will not work for this site, as the data is rendered by JavaScript.
-
-## Troubleshooting
-- If you encounter browser/driver version errors, ensure Brave is up to date.
-- If you use a different OS or browser, you may need to adjust the script accordingly. 
+This will process the idioms and generate a new CSV file with topic tags based on both Chinese and English meanings. 
