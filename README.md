@@ -23,6 +23,7 @@ pip install -r requirements.txt
 
 ### 4. Install Brave Browser
 - Download and install Brave from [brave.com/download](https://brave.com/download/)
+- Or update script to use Chrome's binary path instead (see Notes below)
 
 ### 5. Run the Selenium scraper
 ```

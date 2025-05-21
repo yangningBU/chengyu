@@ -33,6 +33,7 @@ def scrape_lingoace_idioms_selenium():
                         'meaning': cols[3].text.strip()
                     }
                     idioms.append(idiom)
+        
         with open('chinese_idioms.csv', 'w', newline='', encoding='utf-8') as csvfile:
             fieldnames = ['chinese', 'pinyin', 'meaning']
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
