@@ -84,10 +84,7 @@ function render(idiom) {
   const meaning = el("p", "meaning", idiom.meaning);
   meaning.lang = "zh";
 
-  const divider = el("div", "divider");
-  divider.setAttribute("aria-hidden", "true");
-
-  content.append(row, divider, meaning, el("p", "translation", idiom.translation));
+  content.append(row, meaning, el("p", "translation", idiom.translation));
 
   if (idiom.explanation) content.append(el("p", "explanation", idiom.explanation));
 
