@@ -36,3 +36,11 @@ python3 generate_tags.py
 ```
 
 This will process the idioms and generate a new CSV file with topic tags based on both Chinese and English meanings. 
+
+## Website development
+
+Run the site locally with live reload:
+```bash
+docker compose up
+```
+Then open http://localhost:3000. Edits to `index.html`, `app.js` and `chengyu.csv` reload the page, and edits to `style.css` are applied without a reload.

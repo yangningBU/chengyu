@@ -1,0 +1,10 @@
+# Local development with live reload: `docker compose up`, then open http://localhost:3000
+services:
+  dev:
+    build:
+      context: .
+      target: dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./:/site:ro
