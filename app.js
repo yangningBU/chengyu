@@ -68,7 +68,7 @@ function el(tag, cls, text) {
 function render(idiom) {
   const content = document.getElementById("content");
   content.replaceChildren();
-  document.title = `成语 - ${idiom.chinese}`;
+  document.title = idiom.chinese;
 
   const chars = [...idiom.chinese];
   const syllables = idiom.pinyin.split(/\s+/);
