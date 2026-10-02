@@ -178,10 +178,11 @@ html.iframe .date,
 html.iframe .status { display: none; }
 html.iframe .idiom {
   margin: 0;
-  /* width: n glyphs + gaps (~1.1em each) inside a 6vw gutter;
+  gap: 0;
+  /* width: n 1em glyphs inside a 1vw gutter;
      height: hanzi + pinyin (~1.4em) inside a 6vh gutter */
   font-size: min(
-    calc(88vw / (var(--n, 4) * 1.1)),
+    calc(98vw / var(--n, 4)),
     calc(88vh / 1.4)
   );
 }
