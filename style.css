@@ -163,3 +163,25 @@ main {
   .meaning { font-size: 1.15rem; }
   .translation { font-size: 1rem; }
 }
+
+/* ?context=iframe: only the idiom, scaled to fit the frame and vertically centered */
+html.iframe body {
+  padding: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  justify-content: center;
+}
+html.iframe main { flex: none; max-width: none; }
+html.iframe .card { padding: 0; }
+html.iframe .eyebrow,
+html.iframe .date,
+html.iframe .status { display: none; }
+html.iframe .idiom {
+  margin: 0;
+  /* width: n glyphs + gaps (~1.1em each) inside a 6vw gutter;
+     height: hanzi + pinyin (~1.4em) inside a 6vh gutter */
+  font-size: min(
+    calc(88vw / (var(--n, 4) * 1.1)),
+    calc(88vh / 1.4)
+  );
+}

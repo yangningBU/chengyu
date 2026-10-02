@@ -1,6 +1,9 @@
 const CSV_URL = "chengyu.csv";
 const EPOCH = Date.UTC(2026, 0, 1); // day 0 of the rotation
 const HISTORY = 30;                 // days before an idiom may repeat
+// ?context=iframe shows only the characters and pinyin, scaled to fill the frame.
+const IFRAME = new URLSearchParams(location.search).get("context") === "iframe";
+if (IFRAME) document.documentElement.classList.add("iframe");
 
 // Minimal RFC 4180 CSV parser (handles quoted fields, commas, "" escapes).
 function parseCSV(text) {
@@ -74,12 +77,15 @@ function render(idiom) {
   const syllables = idiom.pinyin.split(/\s+/);
   const row = el("div", "idiom");
   row.lang = "zh";
+  row.style.setProperty("--n", chars.length);
   chars.forEach((ch, i) => {
     const col = el("div", "char");
     col.append(el("span", "py", syllables[i] || ""), el("span", "hz", ch));
     row.append(col);
   });
   row.setAttribute("aria-label", `${idiom.chinese} (${idiom.pinyin})`);
+
+  if (IFRAME) { content.append(row); return; }
 
   const meaning = el("p", "meaning", idiom.meaning);
   meaning.lang = "zh";
