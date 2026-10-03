@@ -68,6 +68,22 @@ function el(tag, cls, text) {
   return node;
 }
 
+// Tone number (1-4) from a syllable's diacritic; 0 for neutral tone.
+const TONE_MARKS = { "\u0304": 1, "\u0301": 2, "\u030C": 3, "\u0300": 4 };
+function toneOf(syllable) {
+  for (const c of syllable.normalize("NFD")) if (TONE_MARKS[c]) return TONE_MARKS[c];
+  return 0;
+}
+
+// <span class="py">miàn<span class="tone"> · 4</span></span> (non-breaking spaces),
+// the tone in its own span so narrow layouts can hide it; neutral tone gets none.
+function pinyinSpan(syllable) {
+  const span = el("span", "py", syllable);
+  const tone = toneOf(syllable);
+  if (tone) span.append(el("span", "tone", `\u00A0\u00B7\u00A0${tone}`));
+  return span;
+}
+
 function render(idiom) {
   const content = document.getElementById("content");
   content.replaceChildren();
@@ -80,12 +96,15 @@ function render(idiom) {
   row.style.setProperty("--n", chars.length);
   chars.forEach((ch, i) => {
     const col = el("div", "char");
-    col.append(el("span", "py", syllables[i] || ""), el("span", "hz", ch));
+    col.append(pinyinSpan(syllables[i] || ""), el("span", "hz", ch));
     row.append(col);
   });
   row.setAttribute("aria-label", `${idiom.chinese} (${idiom.pinyin})`);
 
-  if (IFRAME) { content.append(row); return; }
+  if (IFRAME) {
+    content.append(row);
+    return;
+  }
 
   const meaning = el("p", "meaning", idiom.meaning);
   meaning.lang = "zh";

@@ -83,8 +83,9 @@ main {
   min-width: 1em;
 }
 .char .py {
-  font-size: max(0.8rem, 0.14em);
-  font-weight: 700;
+  font-family: "EB Garamond", serif;
+  font-size: max(1rem, 0.19em);
+  font-weight: 400;
   color: var(--ink);
   letter-spacing: 0.02em;
   line-height: 1.2;
@@ -164,7 +165,7 @@ main {
   .translation { font-size: 1rem; }
 }
 
-/* ?context=iframe: only the idiom, scaled to fit the frame and vertically centered */
+/* ?context=iframe: only the idiom, scaled to fit the frame and centered */
 html.iframe body {
   padding: 0;
   min-height: 100vh;
@@ -185,4 +186,15 @@ html.iframe .idiom {
     calc(98vw / var(--n, 4)),
     calc(88vh / 1.4)
   );
+}
+html.iframe .char .py { order: 1; }
+/* small frames: drop the 1rem floor so the pinyin keeps shrinking with the glyphs.
+   The widest syllable ("huǎng · 3", ~3.9em) then fills ~74% of its column. */
+@media (max-width: 399.98px) {
+  html.iframe .char .py { font-size: 0.19em; }
+}
+
+/* very narrow screens (regular page only): drop the " · 4" tone suffix */
+@media (max-width: 299.98px) {
+  html:not(.iframe) .char .py .tone { display: none; }
 }
