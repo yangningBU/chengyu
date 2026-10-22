@@ -1,7 +1,7 @@
 const CSV_URL = "chengyu.csv";
 const EPOCH = Date.UTC(2026, 0, 1); // day 0 of the rotation
 const HISTORY = 30;                 // days before an idiom may repeat
-// ?context=iframe shows only the characters and pinyin, scaled to fill the frame.
+// ?context=iframe shows only the date, characters and pinyin, scaled to fill the frame.
 const IFRAME = new URLSearchParams(location.search).get("context") === "iframe";
 if (IFRAME) document.documentElement.classList.add("iframe");
 

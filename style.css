@@ -165,7 +165,7 @@ main {
   .translation { font-size: 1rem; }
 }
 
-/* ?context=iframe: only the idiom, scaled to fit the frame and centered */
+/* ?context=iframe: only the date and idiom, scaled to fit the frame and centered */
 html.iframe body {
   padding: 0;
   min-height: 100vh;
@@ -175,16 +175,21 @@ html.iframe body {
 html.iframe main { flex: none; max-width: none; }
 html.iframe .card { padding: 0; }
 html.iframe .eyebrow,
-html.iframe .date,
 html.iframe .status { display: none; }
+html.iframe .date {
+  margin: 0 0 0.25rem;
+  padding-inline: 1vw;
+  text-align: start;
+  font-size: clamp(0.7rem, 3.5vmin, 1.02rem);
+}
 html.iframe .idiom {
   margin: 0;
   gap: 0;
   /* width: n 1em glyphs inside a 1vw gutter;
-     height: hanzi + pinyin (~1.4em) inside a 6vh gutter */
+     height: hanzi + pinyin (~1.4em) inside a 6vh gutter, less the date line (~1.6rem max) */
   font-size: min(
     calc(98vw / var(--n, 4)),
-    calc(88vh / 1.4)
+    calc((88vh - 1.6rem) / 1.4)
   );
 }
 html.iframe .char .py { order: 1; }
