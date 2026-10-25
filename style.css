@@ -180,17 +180,12 @@ html.iframe .date {
   margin: 0 0 0.25rem;
   padding-inline: 1vw;
   text-align: start;
-  font-size: clamp(0.7rem, 3.5vmin, 1.02rem);
+  /* font-size is set by fitIframe() in app.js */
 }
 html.iframe .idiom {
   margin: 0;
   gap: 0;
-  /* width: n 1em glyphs inside a 1vw gutter;
-     height: hanzi + pinyin (~1.4em) inside a 6vh gutter, less the date line (~1.6rem max) */
-  font-size: min(
-    calc(98vw / var(--n, 4)),
-    calc((88vh - 1.6rem) / 1.4)
-  );
+  /* font-size is set by fitIframe() in app.js */
 }
 html.iframe .char .py { order: 1; }
 /* small frames: drop the 1rem floor so the pinyin keeps shrinking with the glyphs.

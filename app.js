@@ -5,6 +5,32 @@ const HISTORY = 30;                 // days before an idiom may repeat
 const IFRAME = new URLSearchParams(location.search).get("context") === "iframe";
 if (IFRAME) document.documentElement.classList.add("iframe");
 
+// Iframe: size the glyph row from the frame's measured box rather than vw/vh,
+// which mobile Safari can resolve against the parent page. Fill the width,
+// shrinking only if the date + row would overflow the height.
+function fitIframe() {
+  const row = document.querySelector(".idiom");
+  if (!row) return;
+  const root = document.documentElement;
+  const date = document.getElementById("date");
+  // Date scales with the frame width: 13px on phones up to 24px on wide frames.
+  date.style.fontSize = `${Math.min(24, Math.max(13, root.clientWidth * 0.045))}px`;
+  const room = root.clientHeight * 0.94 - date.offsetHeight
+    - parseFloat(getComputedStyle(date).marginBottom);
+  let size = 100;
+  // Pinyin has a px floor on wider frames, so scale twice to settle.
+  for (let i = 0; i < 2; i++) {
+    row.style.fontSize = `${size}px`;
+    const width = [...row.children].reduce((sum, col) => sum + col.offsetWidth, 0);
+    size *= Math.min(root.clientWidth * 0.96 / width, room / row.offsetHeight);
+  }
+  row.style.fontSize = `${size}px`;
+}
+if (IFRAME) {
+  addEventListener("resize", fitIframe);
+  document.fonts.ready.then(fitIframe);
+}
+
 // Minimal RFC 4180 CSV parser (handles quoted fields, commas, "" escapes).
 function parseCSV(text) {
   const rows = [];
@@ -103,6 +129,7 @@ function render(idiom) {
 
   if (IFRAME) {
     content.append(row);
+    fitIframe();
     return;
   }
 
@@ -129,11 +156,16 @@ function render(idiom) {
   }
 }
 
+const HEBREW_WEEKDAYS = ["ראשון", "שני", "שלישי", "רביעי", "חמישי", "שישי", "שבת"];
+
 async function main() {
   const today = new Date();
-  document.getElementById("date").textContent = today.toLocaleDateString("en-US", {
-    weekday: "long", month: "long", day: "numeric", year: "numeric",
-  });
+  // Iframe shows the date in Chinese without the year, with a Hebrew weekday, e.g. 10月25日 ראשון.
+  document.getElementById("date").textContent = IFRAME
+    ? `${today.toLocaleDateString("zh-CN", { month: "long", day: "numeric" })} ${HEBREW_WEEKDAYS[today.getDay()]}`
+    : today.toLocaleDateString("en-US", {
+        weekday: "long", month: "long", day: "numeric", year: "numeric",
+      });
 
   try {
     const res = await fetch(CSV_URL);
