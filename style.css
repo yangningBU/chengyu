@@ -190,6 +190,7 @@ html.iframe .char .py {
   font-weight: 500;
   font-size: 0.24em;
   letter-spacing: 0;
+  margin-top: 0.5em;
 }
 
 /* very narrow screens (regular page only): drop the " · 4" tone suffix */
