@@ -1,22 +1,18 @@
 const CSV_URL = "chengyu.csv";
 const EPOCH = Date.UTC(2026, 0, 1); // day 0 of the rotation
 const HISTORY = 30;                 // days before an idiom may repeat
-// ?context=iframe shows only the date, characters and pinyin, scaled to fill the frame.
+// ?context=iframe shows only the characters and pinyin, scaled to fill the frame.
 const IFRAME = new URLSearchParams(location.search).get("context") === "iframe";
 if (IFRAME) document.documentElement.classList.add("iframe");
 
 // Iframe: size the glyph row from the frame's measured box rather than vw/vh,
 // which mobile Safari can resolve against the parent page. Fill the width,
-// shrinking only if the date + row would overflow the height.
+// shrinking only if the row would overflow the height.
 function fitIframe() {
   const row = document.querySelector(".idiom");
   if (!row) return;
   const root = document.documentElement;
-  const date = document.getElementById("date");
-  // Date scales with the frame width: 13px on phones up to 24px on wide frames.
-  date.style.fontSize = `${Math.min(24, Math.max(13, root.clientWidth * 0.045))}px`;
-  const room = root.clientHeight * 0.94 - date.offsetHeight
-    - parseFloat(getComputedStyle(date).marginBottom);
+  const room = root.clientHeight * 0.94;
   let size = 100;
   // Pinyin has a px floor on wider frames, so scale twice to settle.
   for (let i = 0; i < 2; i++) {
@@ -156,16 +152,11 @@ function render(idiom) {
   }
 }
 
-const HEBREW_WEEKDAYS = ["ראשון", "שני", "שלישי", "רביעי", "חמישי", "שישי", "שבת"];
-
 async function main() {
   const today = new Date();
-  // Iframe shows the date in Chinese without the year, with a Hebrew weekday, e.g. 10月25日 ראשון.
-  document.getElementById("date").textContent = IFRAME
-    ? `${today.toLocaleDateString("zh-CN", { month: "long", day: "numeric" })} ${HEBREW_WEEKDAYS[today.getDay()]}`
-    : today.toLocaleDateString("en-US", {
-        weekday: "long", month: "long", day: "numeric", year: "numeric",
-      });
+  document.getElementById("date").textContent = today.toLocaleDateString("en-US", {
+    weekday: "long", month: "long", day: "numeric", year: "numeric",
+  });
 
   try {
     const res = await fetch(CSV_URL);

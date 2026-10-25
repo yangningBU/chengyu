@@ -165,7 +165,7 @@ main {
   .translation { font-size: 1rem; }
 }
 
-/* ?context=iframe: only the date and idiom, scaled to fit the frame and centered */
+/* ?context=iframe: only the idiom, scaled to fit the frame and centered */
 html.iframe body {
   padding: 0;
   min-height: 100vh;
@@ -175,23 +175,21 @@ html.iframe body {
 html.iframe main { flex: none; max-width: none; }
 html.iframe .card { padding: 0; }
 html.iframe .eyebrow,
+html.iframe .date,
 html.iframe .status { display: none; }
-html.iframe .date {
-  margin: 0 0 0.25rem;
-  padding-inline: 1vw;
-  text-align: start;
-  /* font-size is set by fitIframe() in app.js */
-}
 html.iframe .idiom {
   margin: 0;
   gap: 0;
   /* font-size is set by fitIframe() in app.js */
 }
-html.iframe .char .py { order: 1; }
-/* small frames: drop the 1rem floor so the pinyin keeps shrinking with the glyphs.
-   The widest syllable ("huǎng · 3", ~3.9em) then fills ~74% of its column. */
-@media (max-width: 399.98px) {
-  html.iframe .char .py { font-size: 0.19em; }
+/* Pinyin in Inter, larger than on the regular page: Garamond's small x-height
+   is hard to read at iframe sizes. Scales with the glyphs (no 1rem floor). */
+html.iframe .char .py {
+  order: 1;
+  font-family: "Inter", system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 0.24em;
+  letter-spacing: 0;
 }
 
 /* very narrow screens (regular page only): drop the " · 4" tone suffix */
